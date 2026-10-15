@@ -1,0 +1,210 @@
+﻿{
+   "CodeGenerationMode": 6,
+   "ContextClassName": "QuanLyBaiGiuXeKTXContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "IrregularWords": null,
+   "MinimumProductVersion": "2.6.1706",
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PluralRules": null,
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "QLBGX",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "SingularRules": null,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[BangGia]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CaLamViec]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HoaDon]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[KhachHang]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[KhuVucDo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[KhuyenMai]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[LichSuCaTruc]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[LoaiXe]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NhanVien]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ThanhVien]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[THE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[VeGuiXe]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Xe]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[vw_DoanhThuTheoCa]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_DoanhThuTheoNgay]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_LuotGuiLechBienSo]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_TrangThaiKhuVuc]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_VeThangSapHetHan]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_XeTonDong]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[sp_BaoCaoDoanhThu]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_CapLaiTheThang]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_CapNhatCaTruc]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_ChotCa]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_DangKyVeThang]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_DangNhap]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_DoiMatKhau]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_GiaHanVeThang]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_KhaiBaoThe]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_KhoaVeThang]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_MoKhoaThe]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_MoKhoaVeThang]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_TraCuuXeRa]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_XacNhanChotCa]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_XuLyXeRa]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[sp_XuLyXeVao]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[fn_ChuanHoaBienSo]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[fn_LayBangGia]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[fn_SoDemGui]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[fn_TinhPhiLuotGui]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[fn_TinhTienCuoc]",
+         "ObjectType": 2
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false,
+   "UseT4Split": false,
+   "UseTypedTvpParameters": true
+}

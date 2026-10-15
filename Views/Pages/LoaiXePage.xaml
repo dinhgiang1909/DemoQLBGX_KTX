@@ -1,0 +1,54 @@
+<Page x:Class="QLBGX.Views.Pages.LoaiXePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Title="Loại xe">
+    <Grid Margin="20,12,20,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="16" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Danh mục loại xe" Style="{StaticResource TieuDeTrang}" />
+
+        <Border Grid.Row="1" Style="{StaticResource Card}">
+            <DataGrid Style="{StaticResource LuoiChiDoc}" ItemsSource="{Binding Items}" SelectedItem="{Binding Chon}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã" Binding="{Binding MaLoaiXe}" />
+                    <DataGridTextColumn Header="Tên loại" Binding="{Binding TenLoai}" Width="*" />
+                    <DataGridTextColumn Header="Mô tả" Binding="{Binding MoTa}" Width="2*" />
+                    <DataGridTemplateColumn Header="Trạng thái">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding TrangThai}" Foreground="{Binding TrangThai, Converter={StaticResource TrangThaiBrush}}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource Card}" VerticalAlignment="Top">
+            <StackPanel>
+                <TextBlock Text="Thông tin loại xe" Style="{StaticResource TieuDeKhoi}" />
+                <TextBlock Text="Mã loại xe" Style="{StaticResource NhanO}" />
+                <ui:TextBox Text="{Binding FMa, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding LaThemMoi}" CharacterCasing="Upper" />
+                <TextBlock Text="Tên loại" Style="{StaticResource NhanO}" />
+                <ui:TextBox Text="{Binding FTen, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="Mô tả" Style="{StaticResource NhanO}" />
+                <ui:TextBox Text="{Binding FMoTa, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="Trạng thái" Style="{StaticResource NhanO}" />
+                <ComboBox ItemsSource="{Binding TrangThais}" SelectedItem="{Binding FTrangThai}" />
+                <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                    <ui:Button Content="Thêm mới" Icon="{ui:SymbolIcon Add24}" Command="{Binding ThemMoiCommand}" Margin="0,0,8,0" />
+                    <ui:Button Content="Lưu" Appearance="Primary" Icon="{ui:SymbolIcon Save24}" Command="{Binding LuuCommand}" Margin="0,0,8,0" />
+                    <ui:Button Content="Ngừng sử dụng" Icon="{ui:SymbolIcon Prohibited24}" Command="{Binding NgungCommand}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

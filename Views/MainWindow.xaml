@@ -1,0 +1,110 @@
+<ui:FluentWindow x:Class="QLBGX.Views.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                 xmlns:pages="clr-namespace:QLBGX.Views.Pages"
+                 Title="Quản lý bãi giữ xe KTX"
+                 Width="1366" Height="800" MinWidth="1100" MinHeight="680"
+                 WindowStartupLocation="CenterScreen"
+                 WindowState="Maximized"
+                 ExtendsContentIntoTitleBar="True"
+                 WindowBackdropType="Mica">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ui:TitleBar Grid.Row="0" Title="Quản lý bãi giữ xe Ký túc xá">
+            <ui:TitleBar.Icon>
+                <ui:SymbolIcon Symbol="VehicleBicycle24" />
+            </ui:TitleBar.Icon>
+        </ui:TitleBar>
+
+        <!-- Thanh thông tin nhân viên đang đăng nhập -->
+        <Border Grid.Row="1" Padding="16,8" BorderThickness="0,0,0,1"
+                Background="{ui:ThemeResource LayerFillColorDefaultBrush}"
+                BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <ui:SymbolIcon Symbol="Person24" FontSize="22" Margin="0,0,8,0" />
+                    <TextBlock VerticalAlignment="Center" FontSize="14">
+                        <Run Text="{Binding Session.TenNV, Mode=OneWay}" FontWeight="SemiBold" />
+                        <Run Text="{Binding Session.MaNV, StringFormat=({0}), Mode=OneWay}"
+                             Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" />
+                    </TextBlock>
+                    <Border Margin="12,0,0,0" Padding="8,2" CornerRadius="4" VerticalAlignment="Center"
+                            Background="{ui:ThemeResource SystemAccentColorPrimaryBrush}">
+                        <TextBlock Text="{Binding Session.ChucVu}" Foreground="White" FontSize="12" />
+                    </Border>
+                    <ui:SymbolIcon Symbol="CalendarClock24" Margin="16,0,6,0" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Session.TenCaHienThi}" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,16,0">
+                    <ui:SymbolIcon Symbol="Clock24" Margin="0,0,6,0" />
+                    <TextBlock VerticalAlignment="Center" FontFamily="Consolas" FontSize="14"
+                               Text="{Binding GioHienTai}" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="3" Orientation="Horizontal">
+                    <ui:Button Content="Đổi mật khẩu" Icon="{ui:SymbolIcon Key24}" Margin="0,0,8,0"
+                               Command="{Binding DoiMatKhauCommand}" />
+                    <ui:Button Content="Đăng xuất" Icon="{ui:SymbolIcon SignOut24}"
+                               Command="{Binding DangXuatCommand}" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <ui:NavigationView x:Name="RootNavigation" Grid.Row="2"
+                           PaneDisplayMode="Left" OpenPaneLength="250"
+                           IsBackButtonVisible="Collapsed" IsPaneToggleVisible="True"
+                           FrameMargin="0">
+            <ui:NavigationView.MenuItems>
+                <ui:NavigationViewItem Content="Tổng quan" TargetPageType="{x:Type pages:DashboardPage}"
+                                       Icon="{ui:SymbolIcon Home24}" />
+                <ui:NavigationViewItem Content="Xe vào" TargetPageType="{x:Type pages:XeVaoPage}"
+                                       Icon="{ui:SymbolIcon ArrowImport24}" />
+                <ui:NavigationViewItem Content="Xe ra" TargetPageType="{x:Type pages:XeRaPage}"
+                                       Icon="{ui:SymbolIcon ArrowExit20}" />
+                <ui:NavigationViewItem Content="Khách hàng &amp; Vé tháng" TargetPageType="{x:Type pages:KhachHangPage}"
+                                       Icon="{ui:SymbolIcon ContactCardGroup24}" />
+                <ui:NavigationViewItem Content="Chốt ca" TargetPageType="{x:Type pages:ChotCaPage}"
+                                       Icon="{ui:SymbolIcon Wallet24}" />
+                <ui:NavigationViewItem Content="Báo cáo" TargetPageType="{x:Type pages:BaoCaoPage}"
+                                       Icon="{ui:SymbolIcon ChartMultiple24}" />
+                <ui:NavigationViewItem x:Name="MenuDanhMuc" Content="Danh mục" Icon="{ui:SymbolIcon Folder24}">
+                    <ui:NavigationViewItem.MenuItems>
+                        <ui:NavigationViewItem Content="Loại xe" TargetPageType="{x:Type pages:LoaiXePage}"
+                                               Icon="{ui:SymbolIcon VehicleBicycle24}" />
+                        <ui:NavigationViewItem Content="Khu vực đỗ" TargetPageType="{x:Type pages:KhuVucPage}"
+                                               Icon="{ui:SymbolIcon Location24}" />
+                        <ui:NavigationViewItem Content="Bảng giá" TargetPageType="{x:Type pages:BangGiaPage}"
+                                               Icon="{ui:SymbolIcon Money24}" />
+                        <ui:NavigationViewItem Content="Khuyến mãi" TargetPageType="{x:Type pages:KhuyenMaiPage}"
+                                               Icon="{ui:SymbolIcon Gift24}" />
+                        <ui:NavigationViewItem Content="Nhân viên" TargetPageType="{x:Type pages:NhanVienPage}"
+                                               Icon="{ui:SymbolIcon PeopleTeam24}" />
+                        <ui:NavigationViewItem Content="Ca làm việc" TargetPageType="{x:Type pages:CaLamViecPage}"
+                                               Icon="{ui:SymbolIcon Clock24}" />
+                        <ui:NavigationViewItem Content="Cập nhật ca trực" TargetPageType="{x:Type pages:CaTrucPage}"
+                                               Icon="{ui:SymbolIcon PersonBoard24}" />
+                    </ui:NavigationViewItem.MenuItems>
+                </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Kho thẻ" TargetPageType="{x:Type pages:KhoThePage}"
+                                       Icon="{ui:SymbolIcon ContactCard24}" />
+            </ui:NavigationView.MenuItems>
+        </ui:NavigationView>
+
+        <ui:ContentDialogHost x:Name="RootContentDialog" Grid.Row="0" Grid.RowSpan="3" />
+        <ui:SnackbarPresenter x:Name="RootSnackbar" Grid.Row="2" VerticalAlignment="Bottom" />
+    </Grid>
+</ui:FluentWindow>

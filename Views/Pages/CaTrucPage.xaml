@@ -1,0 +1,43 @@
+<Page x:Class="QLBGX.Views.Pages.CaTrucPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Title="Cập nhật ca trực">
+    <Grid Margin="20,12,20,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="16" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Cập nhật ca trực" Style="{StaticResource TieuDeTrang}" />
+
+        <Border Grid.Row="1" Style="{StaticResource Card}">
+            <DataGrid Style="{StaticResource LuoiChiDoc}" ItemsSource="{Binding Items}" SelectedItem="{Binding Chon}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã" Binding="{Binding MaNv}" />
+                    <DataGridTextColumn Header="Họ tên" Binding="{Binding TenNv}" Width="*" />
+                    <DataGridTextColumn Header="Chức vụ" Binding="{Binding ChucVu}" />
+                    <DataGridTextColumn Header="Ca hiện tại" Binding="{Binding MaCaNavigation.TenCa, TargetNullValue=(chưa xếp ca)}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource Card}" VerticalAlignment="Top">
+            <StackPanel>
+                <TextBlock Style="{StaticResource TieuDeKhoi}">
+                    <Run Text="Nhân viên:" /> <Run Text="{Binding Chon.TenNv, Mode=OneWay, TargetNullValue=(chọn bên trái)}" />
+                </TextBlock>
+                <TextBlock Text="Ca mới" Style="{StaticResource NhanO}" />
+                <ComboBox ItemsSource="{Binding Cas}" SelectedItem="{Binding CaMoi}" DisplayMemberPath="Ten" />
+                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           Text="Gọi sp_CapNhatCaTruc. Nhân viên còn hóa đơn chưa chốt ca thì CSDL từ chối (lỗi 50084) – phải chốt ca cũ trước." />
+                <ui:Button Margin="0,16,0,0" Content="Cập nhật ca trực" Appearance="Primary" Icon="{ui:SymbolIcon CalendarClock24}"
+                           Command="{Binding CapNhatCommand}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

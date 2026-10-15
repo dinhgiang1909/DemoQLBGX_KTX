@@ -1,0 +1,110 @@
+<Page x:Class="QLBGX.Views.Pages.BangGiaPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Title="Bảng giá">
+    <Grid Margin="20,12,20,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="16" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Bảng giá (lịch sử theo loại xe)" Style="{StaticResource TieuDeTrang}" />
+
+        <Border Grid.Row="1" Style="{StaticResource Card}">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,8">
+                    <TextBlock Text="Lọc:" VerticalAlignment="Center" Margin="0,0,8,0" />
+                    <ComboBox Width="200" ItemsSource="{Binding LocLoaiXe}" SelectedItem="{Binding LocChon}" DisplayMemberPath="Ten" />
+                </StackPanel>
+                <TextBlock DockPanel.Dock="Bottom" Margin="0,8,0,0" TextWrapping="Wrap" FontSize="12"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           Text="Không sửa bảng giá cũ vì hóa đơn đã tham chiếu. Muốn đổi giá: thêm bảng giá mới với ngày áp dụng mới. Nhấp đúp một dòng để lấy làm mẫu." />
+                <DataGrid x:Name="Luoi" Style="{StaticResource LuoiChiDoc}" ItemsSource="{Binding Items}">
+                    <DataGrid.InputBindings>
+                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding SaoChepCommand}"
+                                      CommandParameter="{Binding SelectedItem, ElementName=Luoi}" />
+                    </DataGrid.InputBindings>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Mã" Binding="{Binding MaBangGia}" />
+                        <DataGridTextColumn Header="Loại xe" Binding="{Binding MaLoaiXe}" />
+                        <DataGridTextColumn Header="Áp dụng từ" Binding="{Binding NgayApDung, StringFormat=dd/MM/yyyy}" />
+                        <DataGridTextColumn Header="Giá ngày" Binding="{Binding GiaGuiNgay, Converter={StaticResource Money}}" />
+                        <DataGridTextColumn Header="Giá đêm" Binding="{Binding GiaGuiDem, Converter={StaticResource Money}}" />
+                        <DataGridTextColumn Header="Vé tháng" Binding="{Binding GiaVeThang, Converter={StaticResource Money}}" />
+                        <DataGridTextColumn Header="Phí mất thẻ" Binding="{Binding PhiMatVe, Converter={StaticResource Money}}" />
+                        <DataGridTextColumn Header="Phí cấp lại" Binding="{Binding PhiCapLaiThe, Converter={StaticResource Money}}" />
+                        <DataGridTextColumn Header="Đóng cổng" Binding="{Binding GioBatDauDem, StringFormat=HH:mm}" />
+                        <DataGridTextColumn Header="Mở cổng" Binding="{Binding GioKetThucDem, StringFormat=HH:mm}" />
+                        <DataGridTextColumn Header="Ân hạn" Binding="{Binding GioAnHanVeThang, StringFormat=HH:mm}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource Card}" VerticalAlignment="Top">
+            <StackPanel>
+                <TextBlock Text="Thêm bảng giá mới" Style="{StaticResource TieuDeKhoi}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="8" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Mã bảng giá" Style="{StaticResource NhanO}" />
+                        <ui:TextBox Text="{Binding FMa, UpdateSourceTrigger=PropertyChanged}" CharacterCasing="Upper" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Loại xe" Style="{StaticResource NhanO}" />
+                        <ComboBox ItemsSource="{Binding LoaiXes}" SelectedValuePath="MaLoaiXe" DisplayMemberPath="TenLoai" SelectedValue="{Binding FMaLoaiXe}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1">
+                        <TextBlock Text="Giá gửi ngày" Style="{StaticResource NhanO}" />
+                        <ui:TextBox Text="{Binding FGiaNgay, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="2">
+                        <TextBlock Text="Giá gửi đêm (≥ giá ngày)" Style="{StaticResource NhanO}" />
+                        <ui:TextBox Text="{Binding FGiaDem, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2">
+                        <TextBlock Text="Giá vé tháng" Style="{StaticResource NhanO}" />
+                        <ui:TextBox Text="{Binding FGiaVeThang, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="2">
+                        <TextBlock Text="Phí mất thẻ" Style="{StaticResource NhanO}" />
+                        <ui:TextBox Text="{Binding FPhiMatVe, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3">
+                        <TextBlock Text="Phí cấp lại thẻ" Style="{StaticResource NhanO}" />
+                        <ui:TextBox Text="{Binding FPhiCapLai, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="2">
+                        <TextBlock Text="Ngày áp dụng" Style="{StaticResource NhanO}" />
+                        <DatePicker SelectedDate="{Binding FNgayApDung}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="4">
+                        <TextBlock Text="Giờ đóng cổng" Style="{StaticResource NhanO}" />
+                        <ui:TextBox Text="{Binding FGioDong, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="4" Grid.Column="2">
+                        <TextBlock Text="Giờ mở cổng" Style="{StaticResource NhanO}" />
+                        <ui:TextBox Text="{Binding FGioMo, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="5">
+                        <TextBlock Text="Giờ ân hạn vé tháng" Style="{StaticResource NhanO}" />
+                        <ui:TextBox Text="{Binding FGioAnHan, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </Grid>
+                <ui:Button Margin="0,16,0,0" Content="Thêm bảng giá" Appearance="Primary" Icon="{ui:SymbolIcon Add24}" Command="{Binding ThemCommand}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

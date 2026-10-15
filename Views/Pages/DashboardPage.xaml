@@ -1,0 +1,169 @@
+<Page x:Class="QLBGX.Views.Pages.DashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      x:Name="Root"
+      Title="Tổng quan">
+    <Page.Resources>
+        <Style x:Key="SoLieu" TargetType="Border" BasedOn="{StaticResource Card}">
+            <Setter Property="Margin" Value="0,0,12,12" />
+            <Setter Property="MinHeight" Value="104" />
+        </Style>
+        <Style x:Key="SoLon" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="0,6,0,0" />
+        </Style>
+    </Page.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20,12,20,20">
+            <DockPanel Margin="0,0,0,12">
+                <TextBlock Text="Tổng quan" Style="{StaticResource TieuDeTrang}" Margin="0" VerticalAlignment="Center" />
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <ui:ProgressRing IsIndeterminate="True" Width="22" Height="22" Margin="0,0,12,0"
+                                     Visibility="{Binding DangXuLy, Converter={StaticResource BoolToVis}}" />
+                    <TextBlock Text="Ngày xem:" VerticalAlignment="Center" Margin="0,0,8,0" />
+                    <DatePicker SelectedDate="{Binding NgayXem}" Width="160" />
+                    <ui:Button Margin="8,0,0,0" Content="Làm mới" Icon="{ui:SymbolIcon ArrowSync24}" Command="{Binding LamMoiCommand}" />
+                </StackPanel>
+                <TextBlock Margin="16,0,0,0" VerticalAlignment="Center" FontSize="12" Text="{Binding CapNhatLuc}"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+            </DockPanel>
+
+            <!-- Thẻ số liệu -->
+            <UniformGrid Columns="5">
+                <Border Style="{StaticResource SoLieu}">
+                    <StackPanel>
+                        <TextBlock Text="Lượt xe vào trong ngày" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                        <TextBlock Text="{Binding SoLieu.LuotVao}" Style="{StaticResource SoLon}" />
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource SoLieu}">
+                    <StackPanel>
+                        <TextBlock Text="Lượt xe ra trong ngày" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                        <TextBlock Text="{Binding SoLieu.LuotRa}" Style="{StaticResource SoLon}" />
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource SoLieu}">
+                    <StackPanel>
+                        <TextBlock Text="Xe đang trong bãi" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                        <TextBlock Text="{Binding SoLieu.XeTrongBai}" Style="{StaticResource SoLon}" />
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource SoLieu}">
+                    <StackPanel>
+                        <TextBlock Text="Thẻ lượt đang Rảnh" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                        <TextBlock Text="{Binding SoLieu.TheLuotRanh}" Style="{StaticResource SoLon}" />
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource SoLieu}" Margin="0,0,0,12">
+                    <Grid>
+                        <StackPanel Visibility="{Binding XemDoanhThu, Converter={StaticResource BoolToVis}}">
+                            <TextBlock Text="Doanh thu trong ngày" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            <TextBlock Margin="0,6,0,0" FontSize="15">
+                                <Run Text="Tiền mặt:" /> <Run Text="{Binding SoLieu.DoanhThuTienMat, Mode=OneWay, Converter={StaticResource Money}}" FontWeight="Bold" />
+                            </TextBlock>
+                            <TextBlock FontSize="15">
+                                <Run Text="Chuyển khoản:" /> <Run Text="{Binding SoLieu.DoanhThuChuyenKhoan, Mode=OneWay, Converter={StaticResource Money}}" FontWeight="Bold" />
+                            </TextBlock>
+                        </StackPanel>
+                        <TextBlock Text="Doanh thu: chỉ Quản lý xem trên tổng quan (Thu ngân xem ca mình ở Báo cáo › Theo ca)."
+                                   TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                   Visibility="{Binding XemDoanhThu, Converter={StaticResource BoolToVis}, ConverterParameter=invert}" />
+                    </Grid>
+                </Border>
+            </UniformGrid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Tỷ lệ lấp đầy -->
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Text="Tỷ lệ lấp đầy theo khu vực" Style="{StaticResource TieuDeKhoi}" />
+                        <ItemsControl ItemsSource="{Binding KhuVucs}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,6,0,10">
+                                        <DockPanel>
+                                            <TextBlock DockPanel.Dock="Right">
+                                                <Run Text="{Binding SoXeDangGui, Mode=OneWay}" FontWeight="Bold" />/<Run Text="{Binding SucChua, Mode=OneWay}" />
+                                                (<Run Text="{Binding TyLeLapDay, Mode=OneWay, StringFormat=0.##}" />%)
+                                            </TextBlock>
+                                            <TextBlock>
+                                                <Run Text="{Binding MaKhuVuc, Mode=OneWay}" FontWeight="Bold" />
+                                                <Run Text="{Binding TenKhuVuc, Mode=OneWay}" />
+                                                <Run Text="{Binding TrangThaiKhuVuc, Mode=OneWay, StringFormat=[{0}]}"
+                                                     Foreground="{Binding TrangThaiKhuVuc, Converter={StaticResource TrangThaiBrush}}" />
+                                            </TextBlock>
+                                        </DockPanel>
+                                        <Border Height="16" Margin="0,4,0,0" CornerRadius="8" Background="{DynamicResource ControlStrokeColorDefaultBrush}" ClipToBounds="True">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="{Binding TyLeLapDay, Converter={StaticResource PercentToStar}}" />
+                                                    <ColumnDefinition Width="{Binding TyLeLapDay, Converter={StaticResource PercentToStar}, ConverterParameter=rest}" />
+                                                </Grid.ColumnDefinitions>
+                                                <Border CornerRadius="8">
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="Background" Value="#107C10" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding TrangThaiKhuVuc}" Value="Bảo trì">
+                                                                    <Setter Property="Background" Value="#8A8A8A" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding TrangThaiKhuVuc}" Value="Ngừng sử dụng">
+                                                                    <Setter Property="Background" Value="#8A8A8A" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <ui:Button Content="Xe vào" Icon="{ui:SymbolIcon ArrowImport24}" Command="{Binding DenTrangCommand}" CommandParameter="XeVao" Margin="0,0,8,0" />
+                            <ui:Button Content="Xe ra" Icon="{ui:SymbolIcon ArrowExit20}" Command="{Binding DenTrangCommand}" CommandParameter="XeRa" Margin="0,0,8,0" />
+                            <ui:Button Content="Chi tiết lấp đầy" Icon="{ui:SymbolIcon ChartMultiple24}" Command="{Binding DenTrangCommand}" CommandParameter="LapDay" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Cảnh báo -->
+                <Border Grid.Column="2" Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Text="Cảnh báo" Style="{StaticResource TieuDeKhoi}" />
+                        <ItemsControl ItemsSource="{Binding CanhBaos}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ui:Button Margin="0,0,0,8" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="12,10"
+                                               Command="{Binding DataContext.MoCanhBaoCommand, ElementName=Root}" CommandParameter="{Binding}">
+                                        <DockPanel>
+                                            <Border DockPanel.Dock="Right" MinWidth="36" Padding="8,2" CornerRadius="12"
+                                                    Background="{Binding Muc, Converter={StaticResource MucBrush}}">
+                                                <TextBlock Text="{Binding SoLuong}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" />
+                                            </Border>
+                                            <Border DockPanel.Dock="Left" Width="4" Margin="0,0,10,0" CornerRadius="2"
+                                                    Background="{Binding Muc, Converter={StaticResource MucBrush}}" />
+                                            <TextBlock Text="{Binding Ten}" VerticalAlignment="Center" TextWrapping="Wrap" />
+                                        </DockPanel>
+                                    </ui:Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}" TextWrapping="Wrap"
+                                   Text="Dữ liệu mẫu nằm trong 01–12/10/2026: chọn ngày xem tương ứng để thấy số liệu trong ngày." />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

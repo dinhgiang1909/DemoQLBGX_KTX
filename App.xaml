@@ -1,0 +1,68 @@
+﻿<Application x:Class="QLBGX.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:helpers="clr-namespace:QLBGX.Helpers"
+             ShutdownMode="OnExplicitShutdown">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemesDictionary Theme="Light" />
+                <ui:ControlsDictionary />
+            </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+            <helpers:MoneyConverter x:Key="Money" />
+            <helpers:InverseBoolConverter x:Key="InverseBool" />
+            <helpers:NullToVisibilityConverter x:Key="NullToVisibility" />
+            <helpers:HasTextConverter x:Key="HasText" />
+            <helpers:BoolToVisConverter x:Key="BoolToVis" />
+            <helpers:PathToImageConverter x:Key="PathToImage" />
+            <helpers:MucTrangThaiBrushConverter x:Key="MucBrush" />
+            <helpers:TrangThaiBrushConverter x:Key="TrangThaiBrush" />
+            <helpers:PercentToStarConverter x:Key="PercentToStar" />
+
+            <!-- Ngày hiển thị dạng ngắn dd/MM/yyyy -->
+            <Style TargetType="DatePicker" BasedOn="{StaticResource {x:Type DatePicker}}">
+                <Setter Property="SelectedDateFormat" Value="Short" />
+            </Style>
+
+            <!-- Khung dạng thẻ (card) -->
+            <Style x:Key="Card" TargetType="Border">
+                <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Padding" Value="16" />
+            </Style>
+            <Style x:Key="TieuDeTrang" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Margin" Value="0,0,0,12" />
+            </Style>
+            <Style x:Key="TieuDeKhoi" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Margin" Value="0,0,0,8" />
+            </Style>
+            <Style x:Key="NhanO" TargetType="TextBlock">
+                <Setter Property="Margin" Value="0,8,0,4" />
+                <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+            </Style>
+            <Style x:Key="LuoiChiDoc" TargetType="DataGrid" BasedOn="{StaticResource {x:Type DataGrid}}">
+                <Setter Property="AutoGenerateColumns" Value="False" />
+                <Setter Property="IsReadOnly" Value="True" />
+                <Setter Property="SelectionMode" Value="Single" />
+                <Setter Property="CanUserAddRows" Value="False" />
+                <Setter Property="HeadersVisibility" Value="Column" />
+                <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            </Style>
+
+            <!-- Màu trạng thái thống nhất -->
+            <SolidColorBrush x:Key="BrushHopLe" Color="#107C10" />
+            <SolidColorBrush x:Key="BrushCanhBao" Color="#CA5010" />
+            <SolidColorBrush x:Key="BrushLoi" Color="#C42B1C" />
+            <SolidColorBrush x:Key="BrushNgung" Color="#8A8A8A" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

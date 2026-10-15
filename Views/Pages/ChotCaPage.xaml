@@ -1,0 +1,167 @@
+<Page x:Class="QLBGX.Views.Pages.ChotCaPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Title="Chốt ca">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20,12,20,20">
+            <DockPanel>
+                <TextBlock Text="Chốt ca" Style="{StaticResource TieuDeTrang}" />
+                <ui:Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Làm mới" Icon="{ui:SymbolIcon ArrowSync24}"
+                           Command="{Binding LamMoiCommand}" />
+                <ui:ProgressRing DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0,0,12,0" IsIndeterminate="True" Width="22" Height="22"
+                                 Visibility="{Binding DangXuLy, Converter={StaticResource BoolToVis}}" />
+            </DockPanel>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Phiên hiện tại -->
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource TieuDeKhoi}">
+                            <Run Text="Phiên hiện tại –" /> <Run Text="{Binding TenNhanVien, Mode=OneWay}" />
+                        </TextBlock>
+                        <TextBlock>
+                            <Run Text="Ca:" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            <Run Text="{Binding Phien.TenCa, Mode=OneWay, TargetNullValue=(chưa xếp ca)}" FontWeight="SemiBold" />
+                            <Run Text="   Từ:" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            <Run Text="{Binding Phien.BatDau, Mode=OneWay, StringFormat=dd/MM/yyyy HH:mm}" FontWeight="SemiBold" />
+                            <Run Text="   đến:" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            <Run Text="{Binding Phien.Den, Mode=OneWay, StringFormat=dd/MM/yyyy HH:mm}" FontWeight="SemiBold" />
+                        </TextBlock>
+                        <UniformGrid Columns="3" Margin="0,12,0,0">
+                            <Border Margin="0,0,8,8" Padding="12" CornerRadius="6" Background="{DynamicResource ControlFillColorSecondaryBrush}">
+                                <StackPanel>
+                                    <TextBlock Text="Lượt vào đã lập" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{Binding Phien.LuotVao}" FontSize="26" FontWeight="Bold" />
+                                </StackPanel>
+                            </Border>
+                            <Border Margin="0,0,8,8" Padding="12" CornerRadius="6" Background="{DynamicResource ControlFillColorSecondaryBrush}">
+                                <StackPanel>
+                                    <TextBlock Text="Lượt ra đã xử lý" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{Binding Phien.LuotRa}" FontSize="26" FontWeight="Bold" />
+                                </StackPanel>
+                            </Border>
+                            <Border Margin="0,0,0,8" Padding="12" CornerRadius="6" Background="{DynamicResource ControlFillColorSecondaryBrush}">
+                                <StackPanel>
+                                    <TextBlock Text="Hóa đơn chưa chốt" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{Binding Phien.SoHoaDon}" FontSize="26" FontWeight="Bold" />
+                                </StackPanel>
+                            </Border>
+                            <Border Margin="0,0,8,8" Padding="12" CornerRadius="6" Background="{DynamicResource ControlFillColorSecondaryBrush}">
+                                <StackPanel>
+                                    <TextBlock Text="Doanh thu tiền mặt" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{Binding Phien.TienMat, Converter={StaticResource Money}}" FontSize="22" FontWeight="Bold" />
+                                </StackPanel>
+                            </Border>
+                            <Border Margin="0,0,8,8" Padding="12" CornerRadius="6" Background="{DynamicResource ControlFillColorSecondaryBrush}">
+                                <StackPanel>
+                                    <TextBlock Text="Doanh thu chuyển khoản" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{Binding Phien.ChuyenKhoan, Converter={StaticResource Money}}" FontSize="22" FontWeight="Bold" />
+                                </StackPanel>
+                            </Border>
+                        </UniformGrid>
+
+                        <Grid Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="12" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Tiền mặt thực nộp (đồng)" Style="{StaticResource NhanO}" />
+                                <ui:TextBox FontSize="20" FontWeight="SemiBold" Text="{Binding TienMatThucNop, UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Chênh lệch (thực nộp − tiền mặt)" Style="{StaticResource NhanO}" />
+                                <TextBlock Text="{Binding ChenhLechHienThi}" FontSize="24" FontWeight="Bold">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="#107C10" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding CoChenhLech}" Value="True">
+                                                    <Setter Property="Foreground" Value="#C42B1C" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                        <TextBlock Text="Ghi chú (bắt buộc nếu có chênh lệch)" Style="{StaticResource NhanO}" />
+                        <ui:TextBox Text="{Binding GhiChu, UpdateSourceTrigger=PropertyChanged}" />
+                        <ui:Button Margin="0,12,0,0" Height="44" Appearance="Primary" HorizontalAlignment="Stretch"
+                                   Content="Chốt ca &amp; in biên bản" Icon="{ui:SymbolIcon Checkmark24}" Command="{Binding ChotCaCommand}" />
+                        <ui:InfoBar Margin="0,8,0,0" Severity="Success" IsClosable="True" Title="Kết quả chốt ca"
+                                    Message="{Binding KetQua}" IsOpen="{Binding KetQua, Converter={StaticResource HasText}, Mode=OneWay}" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Lịch sử phiên của tôi -->
+                <Border Grid.Column="2" Style="{StaticResource Card}">
+                    <StackPanel>
+                        <DockPanel>
+                            <TextBlock Text="Các phiên đã chốt của tôi" Style="{StaticResource TieuDeKhoi}" />
+                            <ui:Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="In biên bản" Icon="{ui:SymbolIcon Print24}"
+                                       Command="{Binding InBienBanCommand}" CommandParameter="{Binding PhienCuaToiChon}" />
+                        </DockPanel>
+                        <DataGrid Style="{StaticResource LuoiChiDoc}" ItemsSource="{Binding PhienCuaToi}" SelectedItem="{Binding PhienCuaToiChon}" MaxHeight="440">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="#" Binding="{Binding MaLichSuCa}" />
+                                <DataGridTextColumn Header="Ngày ca" Binding="{Binding NgayCa, StringFormat=dd/MM/yyyy}" />
+                                <DataGridTextColumn Header="Ca" Binding="{Binding TenCa}" />
+                                <DataGridTextColumn Header="Tổng" Binding="{Binding TongDoanhThu, Converter={StaticResource Money}}" />
+                                <DataGridTextColumn Header="Chênh lệch" Binding="{Binding ChenhLech, Converter={StaticResource Money}}" />
+                                <DataGridTemplateColumn Header="Trạng thái">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding TrangThai}" Foreground="{Binding TrangThai, Converter={StaticResource TrangThaiBrush}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Quản lý: phiên chờ xác nhận -->
+            <Border Margin="0,16,0,0" Style="{StaticResource Card}" Visibility="{Binding LaQuanLy, Converter={StaticResource BoolToVis}}">
+                <StackPanel>
+                    <DockPanel>
+                        <TextBlock Text="Phiên chốt ca chờ xác nhận (Quản lý)" Style="{StaticResource TieuDeKhoi}" />
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <ui:Button Content="In biên bản" Icon="{ui:SymbolIcon Print24}" Margin="0,0,8,0"
+                                       Command="{Binding InBienBanCommand}" CommandParameter="{Binding PhienChoChon}" />
+                            <ui:Button Content="Xác nhận" Appearance="Primary" Icon="{ui:SymbolIcon ShieldCheckmark24}"
+                                       Command="{Binding XacNhanCommand}" />
+                        </StackPanel>
+                    </DockPanel>
+                    <DataGrid Style="{StaticResource LuoiChiDoc}" ItemsSource="{Binding PhienChoXacNhan}" SelectedItem="{Binding PhienChoChon}" MaxHeight="360">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="#" Binding="{Binding MaLichSuCa}" />
+                            <DataGridTextColumn Header="Ngày ca" Binding="{Binding NgayCa, StringFormat=dd/MM/yyyy}" />
+                            <DataGridTextColumn Header="Ca" Binding="{Binding TenCa}" />
+                            <DataGridTextColumn Header="Nhân viên" Binding="{Binding TenNv}" />
+                            <DataGridTextColumn Header="Chức vụ" Binding="{Binding ChucVu}" />
+                            <DataGridTextColumn Header="Từ" Binding="{Binding ThoiGianBatDau, StringFormat=dd/MM HH:mm}" />
+                            <DataGridTextColumn Header="Đến" Binding="{Binding ThoiGianKetThuc, StringFormat=dd/MM HH:mm}" />
+                            <DataGridTextColumn Header="Vào" Binding="{Binding TongLuotVao}" />
+                            <DataGridTextColumn Header="Ra" Binding="{Binding TongLuotRa}" />
+                            <DataGridTextColumn Header="HĐ" Binding="{Binding SoHoaDon}" />
+                            <DataGridTextColumn Header="Tiền mặt" Binding="{Binding DoanhThuTienMat, Converter={StaticResource Money}}" />
+                            <DataGridTextColumn Header="Chuyển khoản" Binding="{Binding DoanhThuChuyenKhoan, Converter={StaticResource Money}}" />
+                            <DataGridTextColumn Header="Thực nộp" Binding="{Binding TienMatThucNop, Converter={StaticResource Money}}" />
+                            <DataGridTextColumn Header="Chênh lệch" Binding="{Binding ChenhLech, Converter={StaticResource Money}}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

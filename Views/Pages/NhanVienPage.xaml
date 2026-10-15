@@ -1,0 +1,92 @@
+<Page x:Class="QLBGX.Views.Pages.NhanVienPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Title="Nhân viên">
+    <Grid Margin="20,12,20,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="16" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Nhân viên" Style="{StaticResource TieuDeTrang}" />
+
+        <Border Grid.Row="1" Style="{StaticResource Card}">
+            <DataGrid Style="{StaticResource LuoiChiDoc}" ItemsSource="{Binding Items}" SelectedItem="{Binding Chon}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã" Binding="{Binding MaNv}" />
+                    <DataGridTextColumn Header="Họ tên" Binding="{Binding TenNv}" />
+                    <DataGridTextColumn Header="Chức vụ" Binding="{Binding ChucVu}" />
+                    <DataGridTextColumn Header="Tài khoản" Binding="{Binding TaiKhoan}" />
+                    <DataGridTextColumn Header="SĐT" Binding="{Binding Sdt}" />
+                    <DataGridTextColumn Header="Vào làm" Binding="{Binding NgayVaoLam, StringFormat=dd/MM/yyyy}" />
+                    <DataGridTextColumn Header="Ca" Binding="{Binding MaCaNavigation.TenCa}" />
+                    <DataGridTemplateColumn Header="Trạng thái">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding TrangThai}" Foreground="{Binding TrangThai, Converter={StaticResource TrangThaiBrush}}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource Card}" VerticalAlignment="Top">
+            <StackPanel>
+                <TextBlock Text="Thông tin nhân viên" Style="{StaticResource TieuDeKhoi}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="8" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Mã nhân viên" Style="{StaticResource NhanO}" />
+                        <ui:TextBox Text="{Binding FMa, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding LaThemMoi}" CharacterCasing="Upper" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Chức vụ" Style="{StaticResource NhanO}" />
+                        <ComboBox ItemsSource="{Binding ChucVus}" SelectedItem="{Binding FChucVu}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.ColumnSpan="3">
+                        <TextBlock Text="Họ tên" Style="{StaticResource NhanO}" />
+                        <ui:TextBox Text="{Binding FTen, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2">
+                        <TextBlock Text="Số điện thoại" Style="{StaticResource NhanO}" />
+                        <ui:TextBox Text="{Binding FSdt, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="2">
+                        <TextBlock Text="Ngày vào làm" Style="{StaticResource NhanO}" />
+                        <DatePicker SelectedDate="{Binding FNgayVaoLam}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3">
+                        <TextBlock Text="Tài khoản" Style="{StaticResource NhanO}" />
+                        <ui:TextBox Text="{Binding FTaiKhoan, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="2">
+                        <TextBlock Style="{StaticResource NhanO}" Text="Mật khẩu (mới tạo / đặt lại)" />
+                        <ui:PasswordBox Password="{Binding FMatKhau, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </Grid>
+                <TextBlock Text="Ca ban đầu (chỉ khi thêm mới; đổi ca dùng màn hình Cập nhật ca trực)" Style="{StaticResource NhanO}" TextWrapping="Wrap" />
+                <ComboBox ItemsSource="{Binding Cas}" SelectedItem="{Binding FCa}" DisplayMemberPath="Ten" IsEnabled="{Binding LaThemMoi}" />
+                <TextBlock Margin="0,8,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           Text="Mật khẩu tối thiểu 6 ký tự, chỉ gồm ký tự không dấu (băm SHA-256 giống CSDL). Để trống khi sửa nếu không đổi mật khẩu." />
+                <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                    <ui:Button Content="Thêm mới" Icon="{ui:SymbolIcon Add24}" Command="{Binding ThemMoiCommand}" Margin="0,0,8,0" />
+                    <ui:Button Content="Lưu" Appearance="Primary" Icon="{ui:SymbolIcon Save24}" Command="{Binding LuuCommand}" Margin="0,0,8,0" />
+                    <ui:Button Content="Cho nghỉ việc" Appearance="Danger" Icon="{ui:SymbolIcon PersonDelete24}" Command="{Binding ChoNghiViecCommand}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
